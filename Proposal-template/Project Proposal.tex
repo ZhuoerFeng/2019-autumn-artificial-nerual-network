@@ -1,0 +1,165 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+% \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading nips_2016
+%
+% to avoid loading the natbib package, add option nonatbib:
+% \usepackage[nonatbib]{nips_2016}
+
+%\usepackage{nips_2016}
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+\usepackage[final]{Project_Proposal}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{CJKutf8}
+
+\begin{CJK*}{UTF8}{gbsn}
+\title{《人工神经网络》大作业开题报告}
+
+
+% The \author macro works with any number of authors. There are two
+% commands used to separate the names and addresses of multiple
+% authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to
+% break the lines. Using \AND forces a line break at that point. So,
+% if LaTeX puts 3 of 4 authors names on the first line, and the last
+% on the second line, try using \AND instead of \And before the third
+% author name.
+
+\author{
+  黄民烈\thanks{可利用脚注提供作者的更多信息} \\
+  计算机科学与技术系 \\
+  清华大学 \\
+  \texttt{aihuang@tsinghua.edu.cn} \\
+  %% examples of more authors
+  \AND
+  黄斐\\
+  计算机科学与技术系 \\
+  清华大学 \\
+  \texttt{huangfei382@163.com} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+}
+
+\begin{document}
+
+\maketitle
+
+
+
+\section{任务定义}
+
+\textbf{准确地}定义你要做的任务，并尝试利用数学语言去形式化你的任务。
+
+\section{数据集}
+
+描述你准备使用的数据集（现有的还是自己整理的？），如果是自己整理的，需要给出数据集的相关统计指标。
+
+
+\section{挑战和基线}
+
+提出该任务的难点，并叙述目前在该任务上已有的工作。
+
+\subsection{挑战}
+
+描述你将面临的挑战。
+
+\subsection{基线}
+
+你可以调研和你的工作相关的文献，并选择一些基线。列举的时候可以采取下述两种方式：（也可以采取其他的，这里仅作示例）
+
+
+\begin{itemize}
+
+\item 基线1.
+
+\item 基线2.
+
+\end{itemize}
+
+\paragraph{Paragraphs}
+
+也可利用 \verb+\paragraph+ 命令来列举。
+
+\section{研究计划}
+
+
+清楚地描述你的想法，并将其和数学语言甚至代码联系起来。可以使用脚注、图和表来描述你的想法。
+
+
+\subsection{脚注}
+
+脚注\footnote{可进行补充说明。}
+
+
+\subsection{图}
+
+\begin{figure}[h]
+  \centering
+  \fbox{\rule[-.5cm]{0cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
+  \caption{模型总览}
+\end{figure}
+
+\subsection{表}
+
+表格~\ref{sample-table}.
+
+\begin{table}[t]
+  \caption{数据集描述}
+  \label{sample-table}
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    \multicolumn{2}{c}{实体}                   \\
+    \cmidrule{1-2}
+    类别     & 描述     & 长度 ($\mu$m) \\
+    \midrule
+    Dendrite & Input terminal  & $\sim$100     \\
+    Axon     & Output terminal & $\sim$10      \\
+    Soma     & Cell body       & up to $10^6$  \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{可行性}
+
+分析该任务的可行性。
+
+
+\section*{参考文献}
+
+
+\medskip
+
+\small
+
+[1] Alexander, J.A.\ \& Mozer, M.C.\ (1995) Template-based algorithms
+for connectionist rule extraction. In G.\ Tesauro, D.S.\ Touretzky and
+T.K.\ Leen (eds.), {\it Advances in Neural Information Processing
+  Systems 7}, pp.\ 609--616. Cambridge, MA: MIT Press.
+
+[2] Bower, J.M.\ \& Beeman, D.\ (1995) {\it The Book of GENESIS:
+  Exploring Realistic Neural Models with the GEneral NEural SImulation
+  System.}  New York: TELOS/Springer--Verlag.
+
+[3] Hasselmo, M.E., Schnell, E.\ \& Barkai, E.\ (1995) Dynamics of
+learning and recall at excitatory recurrent synapses and cholinergic
+modulation in rat hippocampal region CA3. {\it Journal of
+  Neuroscience} {\bf 15}(7):5249-5262.
+
+\end{document}
+
+\end{CJK*}

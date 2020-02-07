@@ -1,0 +1,192 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+%     \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading neurips_2018
+
+% ready for submission
+% \usepackage{neurips_2018}
+
+% to compile a preprint version, e.g., for submission to arXiv, add add the
+% [preprint] option:
+%     \usepackage[preprint]{neurips_2018}
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+     \usepackage[final]{nips_2018}
+
+% to avoid loading the natbib package, add option nonatbib:
+%     \usepackage[nonatbib]{neurips_2018}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{graphicx}
+\usepackage{CJKutf8}
+
+
+\title{《人工神经网络》大作业中期报告}
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the
+% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
+% authors names on the first line, and the last on the second line, try using
+% \AND instead of \And before the third author name.
+
+\author{%
+陈博涵\thanks{组长} \\
+  2018011441 \\
+  计算机系计86班 \\
+  \texttt{cbh18@mails.tsinghua.edu.cn} \\
+  %% examples of more authors
+  \And
+  冯卓尔\\
+  2017011998 \\
+  计算机系计86班 \\
+  \texttt{fengzhuoer-thu@outlook.com} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+}
+
+\begin{document}
+% \nipsfinalcopy is no longer used
+\begin{CJK*}{UTF8}{gbsn}
+\maketitle
+
+
+\section{引言}
+
+本部分简要介绍你的问题背景以及解决问题的总体计划。
+
+\section{问题陈述}
+
+具体、准确地用数学符号对你的问题进行形式化，描述问题的输入输出、准备使用的数据集、预期达到的结果以及评价方案。
+
+
+\section{方法}
+
+描述你解决这个问题的方法、模型。
+
+\subsection{起手baseline模型选取}
+我们首先做了一系列的调查，寻找相关的数据集、模型。对于图片处理，我们首先选用的show-and-tell模型；在故事生成部分，我们采用了GPT-2模型。GPT-2基于预训练的BERT模型进行训练，体量庞大，我们选用了目前官方公开的精简版。\\
+\subsection{运行环境}
+由于GPU的数量有限，我们在百度云的aistudio上申请了两块GPU进行训练，其性能参数为【】\\
+\subsection{参数调节}
+在初步调制好GPU运行环境后，我们对我们复原的模型进行了一系列的参数调制。show-and-tell较为轻量，因此没有做过大的调整，遵循\\
+对于GPT-2，影响参数较多。我们的任务对应其conditional sample generation任务。首先对于sequence的影响，我们对其马尔科夫过程考虑的seq长度进行探究，官方申明40左右的长度最佳，即top\_k=40。在我们的实验中，top\_k=30~50之间生成的文本都没有过大的偏离。其次是使用的数据集规模，官方发布了从124M，355M，774M，1558M四个规模的数据集，我们在云服务器上均进行了实验，结果发现1558M规模的数据集覆盖的语料面较广，对于一些奇怪的图片都能够写出较符合逻辑的后文。\\
+\subsection{数据集编写}
+我们发现了一些问题（见第五部分）后，决定自己扩充一部分的数据集来支持我们的模型。通过python3的正则表达式，我们使用了爬虫脚本对Twitter进行了爬取，但是我们的脚本容易触发其机器人检测，目前在这里没有获得进展。我们的计划详见第五部分。
+
+\section{初步实验结果}
+
+陈述并评价你在中期前得到的实验结果。
+
+基于show-and-tell与GPT-2的连接，我们初步能够通过输入图片得到指定长度的配文。一下是五组实验结果，我们的设置为一张图片长度的输入，对应50字左右的文案输出。
+
+\subsection{著名景点}
+
+
+If you climb up the clock tower. There are many places for you to go. There is a big door you can go through, and there is a long corridor where some of the rooms are. Just keep going around the tower until you get out.... \\
+\\
+\textbf{分析}：该文本基本符合塔桥图片所示的场景，文本介绍了图片中场所的一些特点，并邀请读者浏览。
+
+\subsection{自然景物}
+
+
+A large tree. \\
+
+A group of people. One man, sitting. \\
+
+A group of men, standing. \\
+
+A collection of different animals. \\ 
+
+An entire forest, from top to bottom...... \\
+\\
+\textbf{分析}：该文本存在着一些不足：文本中含有较多的图片中并没有出现的元素，但是可以理解为联想产物；但是这一段分享文介绍的主题已经偏离了图片的景物，而且第一句生成的文本对后文的生成有着较大的影响。
+
+\subsection{动物}
+
+Cat with its own light bulb. \\
+
+Cat with its own mouse pad. \\
+
+Cat trying to reach a door. \\
+
+Some cats are very good at solving door problems. \\
+
+The cat does not like cats. \\
+\\
+\textbf{分析}：该文本基本符合预期，文本的主要内容是围绕着猫展开的，并没有明显的偏差，同时也起到的鼓励分享的作用。
+
+\subsection{交通工具}
+
+What I'm seeing is a little like flying. I know this because when I was seven and riding in a red school bus through Manhattan, I felt like I was on a different planet. Every street in the city looked different. The bus...... \\
+\\
+\textbf{分析}：该文本基本符合预期：明显，双层巴士是伦敦的，文本中出现曼哈顿的内容是联想得到的，并没有逻辑上的错误，同时故事内容具有吸引力。
+
+\subsection{人物}
+
+The man walks around the building, looks in a window, and then walks to a back door, opens it, locks it, and walks out. \\
+
+The man then drives away. \\
+
+The next evening, the man appears again, this...... \\
+\\
+\textbf{分析}：该文本存在着一些不足：文本介绍了图片中主要的内容为穿西装的人，可能因为图片的清晰度，在识别的过程中识别的动作为驾驶；但是和图片本身的意义存在着一些差距。
+
+\textbf{注意}: 可以参考开题报告中给出的图表示例来描述你的实验结果。
+
+\section{目前的困难}
+
+分析你在问题定义、方法设计和初步实验中遇到的困难，以及下一步会采取的解决方法。
+\subsection{GPT-2模型的修改}
+\par{
+目前，我们下载了官方发布的精简版的GPT-2类型。通过环境调试能够实现从图片读入（224 $ \times $ 224）进行特征提取，将提取后的特征带入baseline的GPT-2进一步处理，最后生成给定长度（例如50）的文本。这个模型很大程度上依赖于原初的模型，特别是的训练的语料，我们试图对原有的参数进行调试，目前认为对于GPT-2，top\_k（文本生成时，模型考虑sequence后的最大概率出现文字的时候，其前缀单词的考虑数量）为40-50时，产出的文本相关度最高，并且不至于生成长文本的时候不随着长度增长导致注意力转移。
+}
+
+\subsection{show-and-tell模型机制修改，Transformer的应用}
+\par{show-and-tell我们使用的baseline模型采用的是先将输入图片通过CNN，提取出a string of characters，此后将这串特征加入之后的LSTM模型，将LSTM的long term output给出的结果进行编码，输出结果。然而，目前我们的baseline是通过将show-and-tell中出输出的结果作为text-token输入GPT-2中的Transformer，这个过程存在着较大的信息丢失和曲解。我们在处理show-and-tell输出部件的时候，希望能够将LSTM在运行过程中提取到的特征信息（raw seq）取出，并且将其处理成为按照重要性降序排列的list。但是这一个过程操作的验证较为复杂：我们能够快速取出这些信息，但是这些信息是否确实是图片的真实特征、这些信息是否能够支持GPT-2进行进一步的加工，这两点在操作上会耗费较大的时间人力和精力。
+}
+\par{目前，我们对于这个问题提出了几个修正方案，
+}
+
+\subsection{多张图像的特征提取}
+\par{目前我们使用的show-and-tell模型能够支持单张图片输入后，给出特征提取的内容。
+}
+
+\subsection{GPT-2的拓展}
+\par{GPT-2基于Transformer实现unconditional和conditional的文本生成，在conditional的文本生成中，Transformer依赖于自编码器auto-encoder实现了语义的切分和输出文本的整合。但是，如果要对精简版的GPT-2进行优化，特别是使用LSTM的方法对其Transformer优化、使得其生成的文本与后文的相关程度更高，需要修改的内容略大。}
+\par{在问题的定义过程中，我们没有考虑到“生成的分享文案”可以通过怎样的标准定义：我们缺少一个可量化的指标对模型生成的文案与人工写的文案进行比较，从而没有办法对模型进行监督式的干预。目前模型生成的文本主要通过其训练预料进行调整，所幸GPT-2原模型使用的语料体量非常大，能够覆盖非常多的话题和文本风格，但是我们更加希望能够使用Facebook或者Twitter来源的数据对其进行finetuning。具体的操作方法，需要我们实现一个网页脚本，对Twitter或Facebook中配图的英文动态进行爬取，爬去的过程本身就建立了图片到seq的一个标注；然而，对这样的数据集进行后一步的处理（即加入模型训练）或许需要对目前模型的pretrained模型——即BERT进行重训，这些操作都需要比较大的算力，以及数据标注中的人力。
+}
+\par{如上文提到的，我们最终的结果也缺少一个硬性的指标来衡量。评判机器生成文案的优劣可以从语法、表达、口语化、情绪等方面进行评价，我们试图引入这些指标来评价。目前两个试探性的解决方案如下。一、引入语法、表达、口语化、情绪等参数评价，对于机器生成的样本，我们制作训练集或者人工观察输出，对于某一个输入图片，其分享配文的情绪、口语化程度会有一个expected的结果，根据这一结果（TorF）的比对，我们可以计算模型的所谓“生成命中率”。二、对于同一张图片或者一系列图片，雇佣人力对其进行配文撰写，随后邀请实验者（一般为同学，或者微信朋友圈发布）对机器生成与人力撰写的配文进行图灵测试，测试准确率可以在统计推断的意义上认为是模型准确率。
+}
+
+
+\section*{参考文献}
+
+\small
+
+[1] Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., \& Sutskever, I. (2019). {\it Language models are unsupervised multitask learners.} OpenAI Blog, 1(8).
+
+[2] Bower, J.M.\ \& Beeman, D.\ (1995) {\it The Book of GENESIS: Exploring
+  Realistic Neural Models with the GEneral NEural SImulation System.}  New York:
+TELOS/Springer--Verlag.
+
+[3] Hasselmo, M.E., Schnell, E.\ \& Barkai, E.\ (1995) Dynamics of learning and
+recall at excitatory recurrent synapses and cholinergic modulation in rat
+hippocampal region CA3. {\it Journal of Neuroscience} {\bf 15}(7):5249-5262.
+
+\end{CJK*}
+\end{document}
+
+
